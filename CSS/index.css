@@ -1664,7 +1664,7 @@ footer {
     bottom: auto !important;
 
     /* X negativno = bolj levo (proti sredini), Y negativno = bolj gor */
-    transform: translate(-120px, 12px) rotate(-270deg) !important;
+    transform: translate(-130px, -12px) rotate(-270deg) !important;
   }
 
   /* CTA under "Who Are We" */
