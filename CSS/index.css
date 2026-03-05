@@ -1632,25 +1632,39 @@ footer {
 
 @media (max-width: 600px) {
   /* Keep decorative stickers from covering content on phones */
+
+  /* WHO ARE WE — abstract_1: bolj desno + bolj gor */
   .who-decor {
-    top: 1%;
-    left: 30%;
+    top: 4% !important;      /* bolj gor (manj = bolj gor) */
+    left: 76% !important;    /* bolj desno (več = bolj desno) */
     width: clamp(110px, 32vw, 180px);
     opacity: 0.7;
+
+    /* ohrani centriranje + rotacijo */
+    transform: translateX(-50%) rotate(-12deg) !important;
   }
+
   .follow-decor-skull,
   .follow-decor-abstract {
     width: clamp(120px, 36vw, 200px);
     opacity: 0.65;
   }
+
   .follow-decor-skull {
     left: -18px;
     bottom: 18px;
   }
+
+  /* FOLLOW THE BLOCK — abstract: bolj proti sredini (levo) */
   .follow-decor-abstract {
-    /* Move it more to the right + higher on mobile */
-    right: -33px;
-    top: 38px;
+    /* postavi sidro, nato premakni s translate (najbolj stabilno pri rotaciji) */
+    right: 0 !important;
+    top: 0 !important;
+    left: auto !important;
+    bottom: auto !important;
+
+    /* X negativno = bolj levo (proti sredini), Y negativno = bolj gor */
+    transform: translate(-120px, 12px) rotate(-270deg) !important;
   }
 
   /* CTA under "Who Are We" */
