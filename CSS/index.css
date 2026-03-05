@@ -1557,10 +1557,7 @@ footer {
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  .follow-decor-abstract{
-    right: -100px;
-    top: -5px;
-  }
+
   nav {
     padding: 0 20px;
   }
@@ -1636,8 +1633,8 @@ footer {
 @media (max-width: 600px) {
   /* Keep decorative stickers from covering content on phones */
   .who-decor {
-    top: 10%;
-    left: 64%;
+    top: 1%;
+    left: 30%;
     width: clamp(110px, 32vw, 180px);
     opacity: 0.7;
   }
@@ -1652,8 +1649,8 @@ footer {
   }
   .follow-decor-abstract {
     /* Move it more to the right + higher on mobile */
-    right: -100px;
-    top: -5px;
+    right: -33px;
+    top: 38px;
   }
 
   /* CTA under "Who Are We" */
