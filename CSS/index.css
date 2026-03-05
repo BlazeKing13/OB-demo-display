@@ -1684,3 +1684,6 @@ footer {
     height: 160px;
   }
 }
+@media (max-width: 600px) {
+  body { outline: 6px solid red !important; }
+}
