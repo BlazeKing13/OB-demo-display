@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenBlock — Our designs</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="CSS/index.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Barlow+Condensed:wght@300;400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Small header for the designs page */
+      .designs-hero {
+        padding-top: 72px;
+        min-height: 52vh;
+        display: grid;
+        place-items: center;
+        position: relative;
+        overflow: hidden;
+        background: radial-gradient(
+          900px 420px at 50% 30%,
+          rgba(201, 146, 42, 0.18),
+          rgba(12, 11, 9, 0)
+        );
+      }
+      .designs-hero-inner {
+        padding: 40px 24px 10px;
+        text-align: center;
+        max-width: 880px;
+      }
+      .designs-hero h1 {
+        font-family: "Bebas Neue", sans-serif;
+        letter-spacing: 4px;
+        font-size: clamp(44px, 7vw, 86px);
+        line-height: 0.95;
+        margin-top: 10px;
+      }
+      .designs-hero p {
+        font-family: "Space Mono", monospace;
+        color: #777;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-size: 11px;
+        line-height: 1.7;
+        margin-top: 16px;
+      }
+      .designs-hero .hero-actions {
+        margin-top: 22px;
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .designs-hero .hero-actions a {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- COOKIE BANNER -->
+    <div id="cookie-banner">
+      <p>
+        We use cookies to improve your experience. By clicking "Accept", you
+        consent. See our
+        <a href="index.html#legal" onclick="openTab('privacy')">Privacy Policy</a>.
+      </p>
+      <div class="cookie-btns">
+        <button id="decline-cookies">Decline</button>
+        <button id="accept-cookies">Accept All</button>
+      </div>
+    </div>
+
+    <!-- NAV -->
+    <nav>
+      <a href="index.html" class="nav-logo">OPEN<span>BLOCK</span></a>
+      <ul class="nav-links">
+        <li><a href="designs.html">Our designs</a></li>
+        <li><a href="index.html#who">Who Are We</a></li>
+        <li><a href="index.html#join">Join the Movement</a></li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="designs-hero">
+      <div class="designs-hero-inner reveal">
+        <p>// Browse the lineup</p>
+        <h1>OUR<br />DESIGNS</h1>
+        <p>
+          Filters are just to explore — if you like something, DM us on IG or
+          TikTok and we’ll sort you out.
+        </p>
+        <div class="hero-actions">
+          <a href="#designs" class="hero-nav-btn primary">Explore</a>
+          <a href="index.html" class="hero-nav-btn ghost">Back Home</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESIGNS -->
+    <section class="shop" id="designs">
+      <div class="shop-header reveal">
+        <div>
+          <p class="section-label">// Our designs</p>
+          <h2 class="section-title">The Lineup</h2>
+        </div>
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="hoodies">Hoodies</button>
+          <button class="filter-btn" data-filter="tshirts">T-Shirts</button>
+          <button class="filter-btn" data-filter="pants">Pants</button>
+          <button class="filter-btn" data-filter="shoes">Custom Shoes</button>
+          <button class="filter-btn" data-filter="decks">Custom Decks</button>
+          <button class="filter-btn" data-filter="limited">Limited</button>
+        </div>
+      </div>
+      <div class="design-grid reveal" id="design-grid"></div>
+    </section>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="design-modal" onclick="closeModalOutside(event)">
+      <div style="position: relative; max-width: 880px; width: 100%">
+        <button
+          class="modal-close"
+          onclick="document.getElementById('design-modal').classList.remove('open');document.body.style.overflow=''"
+        >
+          ✕
+        </button>
+        <div class="modal">
+          <img id="modal-img" src="" alt="" />
+          <div class="modal-content">
+            <p class="modal-label" id="modal-label"></p>
+            <h2 class="modal-title" id="modal-title"></h2>
+            <p class="modal-desc" id="modal-desc"></p>
+            <div>
+              <p class="size-label" style="margin-bottom: 10px">Available Sizes</p>
+              <div class="size-select" id="modal-sizes"></div>
+            </div>
+
+            <div class="modal-cta">
+              <p class="modal-cta-title">Interested?</p>
+              <p class="modal-cta-text">
+                DM us on
+                <a
+                  href="https://instagram.com/openblock.si"
+                  target="_blank"
+                  class="modal-cta-link"
+                  >Instagram</a
+                >
+                or
+                <a
+                  href="https://tiktok.com/@openblock.si"
+                  target="_blank"
+                  class="modal-cta-link"
+                  >TikTok</a
+                >
+                and we’ll sort you out.
+              </p>
+              <p class="modal-cta-note">dw we’ll reply in 24h 100%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+      let designs = [];
+      let currentDesign = null;
+      let selectedSize = null;
+
+      async function loadDesigns() {
+        const res = await fetch("data/designs.json", { cache: "no-store" });
+        if (!res.ok) throw new Error("Failed to load designs.json");
+        const data = await res.json();
+        data.sort((a, b) => a.id - b.id);
+        return data;
+      }
+
+      function renderDesigns(filter) {
+        const grid = document.getElementById("design-grid");
+        const list =
+          filter === "all"
+            ? designs
+            : designs.filter((d) => d.category === filter);
+
+        grid.innerHTML = list
+          .map(
+            (d) => `
+      <div class="design-card" onclick="openModal(${d.id})" role="button" tabindex="0">
+        <div class="design-img-wrap">
+          ${
+            d.tag
+              ? `<span class="design-badge badge-${
+                  d.tag === "limited" ? "limited" : d.tag === "sale" ? "sale" : "new"
+                }">${d.tag.toUpperCase()}</span>`
+              : ""
+          }
+          <img src="${d.img}" alt="${d.name}" loading="lazy" />
+        </div>
+        <p class="design-meta">${d.label}</p>
+        <p class="design-name">${d.name.toUpperCase()}</p>
+      </div>
+    `
+          )
+          .join("");
+      }
+
+      async function init() {
+        try {
+          designs = await loadDesigns();
+          renderDesigns("all");
+
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach((btn) =>
+              btn.addEventListener("click", () => filterDesigns(btn.dataset.filter))
+            );
+        } catch (err) {
+          console.error(err);
+          document.getElementById("design-grid").innerHTML =
+            "<p style='opacity:.7'>Failed to load designs. Please try again.</p>";
+        }
+      }
+
+      init();
+
+      function filterDesigns(f) {
+        document
+          .querySelectorAll(".filter-btn")
+          .forEach((b) => b.classList.toggle("active", b.dataset.filter === f));
+
+        renderDesigns(f);
+        setTimeout(
+          () => document.getElementById("designs").scrollIntoView({ behavior: "smooth" }),
+          50
+        );
+      }
+
+      function selectSize(size) {
+        selectedSize = size;
+        document.querySelectorAll("#modal-sizes .size-chip").forEach((chip) => {
+          chip.classList.toggle("active", chip.dataset.size === size);
+        });
+      }
+
+      function openModal(id) {
+        const d = designs.find((x) => x.id === id);
+        if (!d) return;
+
+        currentDesign = d;
+        selectedSize = null;
+
+        document.getElementById("modal-img").src = d.img;
+        document.getElementById("modal-img").alt = d.name;
+        document.getElementById("modal-label").textContent = d.label;
+        document.getElementById("modal-title").textContent = d.name.toUpperCase();
+        document.getElementById("modal-desc").textContent = d.desc;
+
+        const sizesWrap = document.getElementById("modal-sizes");
+        sizesWrap.innerHTML = (d.sizes || [])
+          .map((s) => `<span class="size-chip" data-size="${s}">${s}</span>`)
+          .join("");
+
+        sizesWrap.querySelectorAll(".size-chip").forEach((chip) => {
+          chip.addEventListener("click", (e) => {
+            e.stopPropagation();
+            selectSize(chip.dataset.size);
+          });
+        });
+
+        document.getElementById("design-modal").classList.add("open");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeModalOutside(e) {
+        if (e.target === document.getElementById("design-modal")) {
+          document.getElementById("design-modal").classList.remove("open");
+          document.body.style.overflow = "";
+        }
+      }
+
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2600);
+      }
+
+      // Cookie banner (same behavior as home)
+      const cookieBanner = document.getElementById("cookie-banner");
+      const acceptBtn = document.getElementById("accept-cookies");
+      const declineBtn = document.getElementById("decline-cookies");
+
+      function hideCookieBanner() {
+        cookieBanner.style.display = "none";
+      }
+
+      if (localStorage.getItem("cookieConsent")) {
+        hideCookieBanner();
+      }
+
+      acceptBtn.addEventListener("click", () => {
+        localStorage.setItem("cookieConsent", "accepted");
+        hideCookieBanner();
+        showToast("Cookies accepted");
+      });
+
+      declineBtn.addEventListener("click", () => {
+        localStorage.setItem("cookieConsent", "declined");
+        hideCookieBanner();
+        showToast("Cookies declined");
+      });
+
+      // Reveal animations
+      const reveals = document.querySelectorAll(".reveal, .reveal-left, .reveal-right");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("in");
+          });
+        },
+        { threshold: 0.12 }
+      );
+      reveals.forEach((el) => observer.observe(el));
+
+      // Legal tabs helper (links back to home section)
+      function openTab(id) {
+        // Forward to home page legal section with the correct tab.
+        // (The home page runs openTab on load; this keeps this page simple.)
+        window.location.href = `index.html#legal`;
+      }
+    </script>
+  </body>
+</html>
