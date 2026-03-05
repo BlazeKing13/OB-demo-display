@@ -1557,6 +1557,10 @@ footer {
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
+  .follow-decor-abstract{
+    right: -100px;
+    top: -5px;
+  }
   nav {
     padding: 0 20px;
   }
@@ -1684,6 +1688,4 @@ footer {
     height: 160px;
   }
 }
-@media (max-width: 600px) {
-  body { outline: 6px solid red !important; }
-}
+
