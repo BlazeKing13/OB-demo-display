@@ -1648,8 +1648,8 @@ footer {
   }
   .follow-decor-abstract {
     /* Move it more to the right + higher on mobile */
-    right: -44px;
-    top: 10px;
+    right: -100px;
+    top: -5px;
   }
 
   /* CTA under "Who Are We" */
