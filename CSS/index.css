@@ -1664,7 +1664,7 @@ footer {
     bottom: auto !important;
 
     /* X negativno = bolj levo (proti sredini), Y negativno = bolj gor */
-    top: 80px !important;
+    top: 180px !important;
     transform: translate(-130px, 12px) rotate(-270deg) !important;
   }
 
